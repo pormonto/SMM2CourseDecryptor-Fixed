@@ -8,8 +8,8 @@ Uses NodeJS Module created by RedDuckss.
 [partrick](https://github.com/RedDuckss/partrick) You can run `npm install partrick` from the command line to get the module
 
 ## Usage
-smm2dec.js input output
-flag -d decrypt
+smm2dec.js input output  
+flag -d decrypt  
 flag -e encrypt
 
 ## Where do I get help/support?
