@@ -6,17 +6,17 @@ switch (myArgs[0]) {
 
 
 case '-d':
-    const EncData = fs.readFileSync(myArgs[1]);
+    const encrypted_data = fs.readFileSync(myArgs[1]);
 
-    const decrypted = encryption.decryptCourse(EncData);
+    const decrypted = encryption.decryptCourse(encrypted_data);
 
     fs.writeFileSync(myArgs[2], decrypted);
     break;
 
 case '-e':
-    const DecData = fs.readFileSync(myArgs[1]);
+    const decrypted_data = fs.readFileSync(myArgs[1]);
 
-    const encrypted = encryption.encryptCourse(DecData);
+    const encrypted = encryption.encryptCourse(decrypted_data);
 
     fs.writeFileSync(myArgs[2], encrypted);
     break;
