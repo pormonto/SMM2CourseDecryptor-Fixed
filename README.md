@@ -1,16 +1,14 @@
 # SMM2 Course Descryptor
-A simple little command-line tool that allows you to decrypt and encrypt Super Mario Maker 2 course data files.  
-Uses a NodeJS Module created by RedDuckss called partrick.
+A simple little command-line tool that allows you to decrypt and encrypt Super Mario Maker 2 course data/thumbnail files.  
 
 ## Pre-Requisites
 [SMM2CourseDecryptor](https://github.com/MarioPossamato/SMM2CourseDecryptor/archive/master.zip)  
-[NodeJS](nodejs.org/)  
-[partrick](https://github.com/RedDuckss/partrick) You can run `npm install partrick` from the command line to get the module
+[Python 3.9.0](https://www.python.org/downloads/release/python-390/)  
+PyCryptodome: `pip install pycryptodome`  
+NintendoClients: `pip install https://github.com/Kinnay/NintendoClients/archive/master.zip`  
 
 ## Usage
-smm2dec.js flag input output  
-flag -d decrypt  
-flag -e encrypt
+SMM2CourseDecryptor.py input output  
 
 ## Where do I get help/support?
 [My Discord Server](https://discord.gg/8wx8uQF)
@@ -20,4 +18,5 @@ flag -e encrypt
 
 ## Who gets credit for this?
 - Mario Possamato for SMM2 Course Decryptor
-- RedDuckss for creating the awesome module it uses
+- Kinnay for his decryptor
+- Kinnay and 0Liam for helping me get the encryption and decryption to work properly
