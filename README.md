@@ -1,5 +1,6 @@
 # SMM2 Course Descryptor
-A simple little command-line tool that allows you to decrypt and encrypt Super Mario Maker 2 course data/thumbnail files.  
+A Command-line Tool That Allows You To Decrypt And Encrypt Super Mario Maker 2 Courses And Thumbnails.  
+![preview](https://cdn.discordapp.com/attachments/593549383157547073/779463087794421810/unknown.png)
 
 ## Pre-Requisites
 [SMM2CourseDecryptor](https://github.com/MarioPossamato/SMM2CourseDecryptor/archive/master.zip)  
