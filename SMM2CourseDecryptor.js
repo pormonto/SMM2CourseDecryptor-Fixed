@@ -1,7 +1,7 @@
-# SMM2CourseDecryptor
-# A Script For The Decryption And Encryption Of Super Mario Maker 2 Binary Course Data Files (*.bcd).
-# Version 0.2
-# Created By MarioPossamato With Help From RedDuckss (https://github.com/RedDuckss/)
+// SMM2CourseDecryptor
+// A Script For The Decryption And Encryption Of Super Mario Maker 2 Binary Course Data Files (*.bcd).
+// Version 0.2
+// Created By MarioPossamato With Help From RedDuckss (https://github.com/RedDuckss/)
 
 const { encryption } = require("partrick");
 const fs = require("fs");
