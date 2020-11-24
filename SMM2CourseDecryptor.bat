@@ -8,3 +8,4 @@ if not "%~2"=="" (
         echo Usage: %0 ^<input^> [output]
     )
 )
+pause

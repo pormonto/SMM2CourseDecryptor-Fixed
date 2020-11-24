@@ -20,6 +20,7 @@ from Crypto.Cipher import AES
 from Crypto import Random
 from nintendo.sead import random
 from nintendo.enl import crypto
+from PIL import Image
 
 #==== Key Tables ====#
 CourseKeyTable = [ #==== Table For Decrypting Course data ====#
@@ -242,26 +243,34 @@ def main():
         #==== Thumbnail Data ====#
         if(f.tell()==0x1C000): #==== Encrypted Thumbnail Data ====#
             print("Decrypting Thumbnail Data...")
-            buf = open(sys.argv[1], "rb").read()
-            buf = DecryptData(buf, ThumbKeyTable, 0x0) #==== Decrypt The Thumbnail Data ====#
-            open(os.path.splitext(sys.argv[2])[0]+".jpg", "wb").write(buf)
-        if(f.tell()==0x1BFD0): #==== Decrypted Thumbnail Data ====#
+            data = open(sys.argv[1], "rb").read()
+            data = DecryptData(data, ThumbKeyTable, 0x0) #==== Decrypt The Thumbnail Data ====#
+            open(os.path.splitext(sys.argv[2])[0]+".jpg", "wb").write(data)
+        elif(os.path.splitext(sys.argv[1])[1] in (".jpg", ".jpeg")): #==== Decrypted Thumbnail Data ====#
             print("Encrypting Thumbnail Data...")
-            buf = open(sys.argv[1], "rb").read()
-            buf = EncryptData(buf, ThumbKeyTable, 0x0) #==== Encrypt The Thumbnail Data ====#
-            open(os.path.splitext(sys.argv[2])[0]+".btl", "wb").write(buf)
+            data = open(sys.argv[1], "rb").read()
+            if(f.tell()<=0x1BFD0):
+                pass
+            else:
+                print("Error: Thumbnail is too large!")
+                return
+            data = EncryptData(data+b'\0'*(0x1BFD0 - len(data)), ThumbKeyTable, 0x0) #==== Encrypt The Thumbnail Data ====#
+            open(os.path.splitext(sys.argv[1])[0]+".btl", "wb").write(data)
 
         #==== Course Data ====#
-        if(f.tell()==0x5C000): #==== Encrypted Course Data ====#
+        elif(f.tell()==0x5C000): #==== Encrypted Course Data ====#
             print("Decrypting Course Data...")
-            buf = open(sys.argv[1], "rb").read()
-            buf = DecryptData(buf, CourseKeyTable, 0x10) #==== Decrypt The Course Data ====#
-            open(sys.argv[2], "wb").write(buf)
-        if(f.tell()==0x5BFD0): #==== Decrypted Course Data ====#
+            data = open(sys.argv[1], "rb").read()
+            data = DecryptData(data, CourseKeyTable, 0x10) #==== Decrypt The Course Data ====#
+            open(sys.argv[2], "wb").write(data)
+        elif(f.tell()==0x5BFD0): #==== Decrypted Course Data ====#
             print("Encrypting Course Data...")
-            buf = open(sys.argv[1], "rb").read()
-            buf = EncryptData(buf, CourseKeyTable, 0x10) #==== Encrypt The Course Data ====#
-            open(sys.argv[2], "wb").write(buf)
+            data = open(sys.argv[1], "rb").read()
+            data = EncryptData(data, CourseKeyTable, 0x10) #==== Encrypt The Course Data ====#
+            open(sys.argv[2], "wb").write(data)
+        else:
+            print("Error: Unsupported file!")
+            return
     else:
         if(len(sys.argv)==2):
             f = open(sys.argv[1], "rb")
@@ -270,26 +279,34 @@ def main():
             #==== Thumbnail Data ====#
             if(f.tell()==0x1C000): #==== Encrypted Thumbnail Data ====#
                 print("Decrypting Thumbnail Data...")
-                buf = open(sys.argv[1], "rb").read()
-                buf = DecryptData(buf, ThumbKeyTable, 0x0) #==== Decrypt The Thumbnail Data ====#
-                open(os.path.splitext(sys.argv[1])[0]+".jpg", "wb").write(buf)
-            if(f.tell()==0x1BFD0): #==== Decrypted Thumbnail Data ====#
+                data = open(sys.argv[1], "rb").read()
+                data = DecryptData(data, ThumbKeyTable, 0x0) #==== Decrypt The Thumbnail Data ====#
+                open(os.path.splitext(sys.argv[1])[0]+".jpg", "wb").write(data)
+            elif(os.path.splitext(sys.argv[1])[1] in (".jpg", ".jpeg")): #==== Decrypted Thumbnail Data ====#
                 print("Encrypting Thumbnail Data...")
-                buf = open(sys.argv[1], "rb").read()
-                buf = EncryptData(buf, ThumbKeyTable, 0x0) #==== Encrypt The Thumbnail Data ====#
-                open(os.path.splitext(sys.argv[1])[0]+".btl", "wb").write(buf)
+                data = open(sys.argv[1], "rb").read()
+                if(f.tell()<=0x1BFD0):
+                    pass
+                else:
+                    print("Error: Thumbnail is too large!")
+                    return
+                data = EncryptData(data+b'\0'*(0x1BFD0 - len(data)), ThumbKeyTable, 0x0) #==== Encrypt The Thumbnail Data ====#
+                open(os.path.splitext(sys.argv[1])[0]+".btl", "wb").write(data)
 
             #==== Course Data ====#
-            if(f.tell()==0x5C000): #==== Encrypted Course Data ====#
+            elif(f.tell()==0x5C000): #==== Encrypted Course Data ====#
                 print("Decrypting Course Data...")
-                buf = open(sys.argv[1], "rb").read()
-                buf = DecryptData(buf, CourseKeyTable, 0x10) #==== Decrypt The Course Data ====#
-                open(sys.argv[1], "wb").write(buf)
-            if(f.tell()==0x5BFD0): #==== Decrypted Course Data ====#
+                data = open(sys.argv[1], "rb").read()
+                data = DecryptData(data, CourseKeyTable, 0x10) #==== Decrypt The Course Data ====#
+                open(sys.argv[1], "wb").write(data)
+            elif(f.tell()==0x5BFD0): #==== Decrypted Course Data ====#
                 print("Encrypting Course Data...")
-                buf = open(sys.argv[1], "rb").read()
-                buf = EncryptData(buf, CourseKeyTable, 0x10) #==== Encrypt The Course Data ====#
-                open(sys.argv[1], "wb").write(buf)
+                data = open(sys.argv[1], "rb").read()
+                data = EncryptData(data, CourseKeyTable, 0x10) #==== Encrypt The Course Data ====#
+                open(sys.argv[1], "wb").write(data)
+            else:
+                print("Error: Unsupported file!")
+                return
         else:
             print("Usage: "+sys.argv[0]+" <input> [output]")
             return
