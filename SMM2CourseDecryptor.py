@@ -267,7 +267,7 @@ def main():
             print("Encrypting Course Data...")
             data = open(sys.argv[1], "rb").read()
             data = bytearray(data)
-            data[0x8:0xC] = int.to_bytes(zlib.crc32(data[0xC:]), 0x4, 'little')
+            data[0x8:0xC] = int.to_bytes(zlib.crc32(data[0x10:]), 0x4, 'little')
             data = EncryptData(data, CourseKeyTable, 0x10) #==== Encrypt The Course Data ====#
             open(sys.argv[2], "wb").write(data)
         else:
@@ -305,7 +305,7 @@ def main():
                 print("Encrypting Course Data...")
                 data = open(sys.argv[1], "rb").read()
                 data = bytearray(data)
-                data[0x8:0xC] = int.to_bytes(zlib.crc32(data[0xC:]), 0x4, 'little')
+                data[0x8:0xC] = int.to_bytes(zlib.crc32(data[0x10:]), 0x4, 'little')
                 data = EncryptData(data, CourseKeyTable, 0x10) #==== Encrypt The Course Data ====#
                 open(sys.argv[1], "wb").write(data)
             else:
