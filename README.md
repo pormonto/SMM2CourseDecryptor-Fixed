@@ -28,3 +28,6 @@ Partrick: `npm install partrick`
 - Kinnay for his decryptor
 - Kinnay and 0Liam for helping me get the encryption and decryption to work properly
 - RedDuckss for the partrick NodeJS module
+- 0Liam and Treeki for file format documentation:  
+  - [0Liam's course format documentation](https://github.com/0Liam/smm2-documentation/blob/master/Course%20Format.md)  
+  - [Treeki's course format documentation](https://github.com/Treeki/SMM2Reversing/blob/master/LevelFormat.md)
