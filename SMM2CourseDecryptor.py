@@ -243,19 +243,19 @@ def main():
         #==== Thumbnail Data ====#
         if(f.tell()==0x1C000): #==== Encrypted Thumbnail Data ====#
             print("Decrypting Thumbnail Data...")
-            data = open(sys.argv[1], "rb").read()
+            data = open(sys.argv[2], "rb").read()
             data = DecryptData(data, ThumbKeyTable, 0x0) #==== Decrypt The Thumbnail Data ====#
             open(os.path.splitext(sys.argv[2])[0]+".jpg", "wb").write(data)
         elif(os.path.splitext(sys.argv[1])[1] in (".jpg", ".jpeg")): #==== Decrypted Thumbnail Data ====#
             print("Encrypting Thumbnail Data...")
-            data = open(sys.argv[1], "rb").read()
+            data = open(sys.argv[2], "rb").read()
             if(f.tell()<=0x1BFD0):
                 pass
             else:
                 print("Error: Thumbnail is too large!")
                 return
             data = EncryptData(data+b'\0'*(0x1BFD0 - len(data)), ThumbKeyTable, 0x0) #==== Encrypt The Thumbnail Data ====#
-            open(os.path.splitext(sys.argv[1])[0]+".btl", "wb").write(data)
+            open(sys.argv[2], "wb").write(data)
 
         #==== Course Data ====#
         elif(f.tell()==0x5C000): #==== Encrypted Course Data ====#
@@ -270,6 +270,46 @@ def main():
             data[0x8:0xC] = int.to_bytes(zlib.crc32(data[0x10:]), 0x4, 'little')
             data = EncryptData(data, CourseKeyTable, 0x10) #==== Encrypt The Course Data ====#
             open(sys.argv[2], "wb").write(data)
+
+        #==== Save/Quest/Later Data ====#
+        elif(f.tell()==0xC000 and os.path.splitext(sys.argv[1])[1] == ".dat"): #==== Encrypted Save/Quest/Later Data ====#
+            #==== Input File Names Must Contain Keywords For File Type Identification ====#
+            if("save" in os.path.split(sys.argv[1])[1]):
+               Name = "Save"
+               KeyTable = SaveKeyTable
+            elif("quest" in os.path.split(sys.argv[1])[1]):
+               Name = "Quest"
+               KeyTable = QuestKeyTable
+            elif("later" in os.path.split(sys.argv[1])[1]):
+               Name = "Later"
+               KeyTable = LaterKeyTable
+            else:
+                return
+            print("Decrypting {} Data...".format(Name))
+            data = open(sys.argv[1], "rb").read()
+            data = DecryptData(data, KeyTable, 0x10) #==== Decrypt The Save/Quest/Later Data ====#
+            open(sys.argv[2], "wb").write(data)
+        elif(f.tell()==0xBFD0 and os.path.splitext(sys.argv[1])[1] == ".dat"): #==== Decrypted Save/Quest/Later Data ====#
+            #==== Input File Names Must Contain Keywords For File Type Identification ====#
+            if("save" in os.path.split(sys.argv[1])[1]):
+               Name = "Save"
+               KeyTable = SaveKeyTable
+            elif("quest" in os.path.split(sys.argv[1])[1]):
+               Name = "Quest"
+               KeyTable = QuestKeyTable
+            elif("later" in os.path.split(sys.argv[1])[1]):
+               Name = "Later"
+               KeyTable = LaterKeyTable
+            else:
+                return
+            print("Encrypting {} Data...".format(Name))
+            data = open(sys.argv[1], "rb").read()
+            data = bytearray(data)
+            data[0x8:0xC] = int.to_bytes(zlib.crc32(data[0x10:]), 0x4, 'little')
+            data = EncryptData(data, KeyTable, 0x10) #==== Encrypt The Save/Quest/Later Data ====#
+            open(sys.argv[2], "wb").write(data)
+
+        #==== Unsupported File ====#
         else:
             print("Error: Unsupported file!")
             return
@@ -308,6 +348,46 @@ def main():
                 data[0x8:0xC] = int.to_bytes(zlib.crc32(data[0x10:]), 0x4, 'little')
                 data = EncryptData(data, CourseKeyTable, 0x10) #==== Encrypt The Course Data ====#
                 open(sys.argv[1], "wb").write(data)
+
+            #==== Save/Quest/Later Data ====#
+            elif(f.tell()==0xC000 and os.path.splitext(sys.argv[1])[1] == ".dat"): #==== Encrypted Save/Quest/Later Data ====#
+                #==== Input File Names Must Contain Keywords For File Type Identification ====#
+                if("save" in os.path.split(sys.argv[1])[1]):
+                   Name = "Save"
+                   KeyTable = SaveKeyTable
+                elif("quest" in os.path.split(sys.argv[1])[1]):
+                   Name = "Quest"
+                   KeyTable = QuestKeyTable
+                elif("later" in os.path.split(sys.argv[1])[1]):
+                   Name = "Later"
+                   KeyTable = LaterKeyTable
+                else:
+                    return
+                print("Decrypting {} Data...".format(Name))
+                data = open(sys.argv[1], "rb").read()
+                data = DecryptData(data, KeyTable, 0x10) #==== Decrypt The Save/Quest/Later Data ====#
+                open(sys.argv[1], "wb").write(data)
+            elif(f.tell()==0xBFD0 and os.path.splitext(sys.argv[1])[1] == ".dat"): #==== Decrypted Save/Quest/Later Data ====#
+                #==== Input File Names Must Contain Keywords For File Type Identification ====#
+                if("save" in os.path.split(sys.argv[1])[1]):
+                   Name = "Save"
+                   KeyTable = SaveKeyTable
+                elif("quest" in os.path.split(sys.argv[1])[1]):
+                   Name = "Quest"
+                   KeyTable = QuestKeyTable
+                elif("later" in os.path.split(sys.argv[1])[1]):
+                   Name = "Later"
+                   KeyTable = LaterKeyTable
+                else:
+                    return
+                print("Encrypting {} Data...".format(Name))
+                data = open(sys.argv[1], "rb").read()
+                data = bytearray(data)
+                data[0x8:0xC] = int.to_bytes(zlib.crc32(data[0x10:]), 0x4, 'little')
+                data = EncryptData(data, KeyTable, 0x10) #==== Encrypt The Save/Quest/Later Data ====#
+                open(sys.argv[1], "wb").write(data)
+
+            #==== Unsupported File ====#
             else:
                 print("Error: Unsupported file!")
                 return
