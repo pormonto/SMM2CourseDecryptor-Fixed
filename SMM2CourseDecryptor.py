@@ -20,7 +20,6 @@ from Crypto.Cipher import AES
 from Crypto import Random
 from nintendo.sead import random
 from nintendo.enl import crypto
-from PIL import Image
 
 #==== Key Tables ====#
 CourseKeyTable = [ #==== Table For Decrypting Course data ====#
@@ -193,7 +192,6 @@ UnknownKeyTable = [ #==== Unknown Key Table At 0x7101D79AB0 ====#
 	0x983A3CF4, 0xEDE1F7A7, 0x590F8E25, 0x865EE19C,
 	0xF8D36974, 0x8AD5E61F, 0x8887B5A8, 0x303C31A
 ]
-#====================================#
 
 #==== Decrypt Data ====#
 def DecryptData(data, KeyTable, HeaderSize):
