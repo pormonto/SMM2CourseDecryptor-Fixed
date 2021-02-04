@@ -5,10 +5,10 @@ A Command-line Tool That Allows You To Decrypt And Encrypt Super Mario Maker 2 C
 ## Pre-Requisites
 [SMM2CourseDecryptor](https://github.com/MarioPossamato/SMM2CourseDecryptor/archive/master.zip)  
 
-Python version:
 [Python 3.9.0](https://www.python.org/downloads/release/python-390/)  
 PyCryptodome: `pip install pycryptodome`  
 NintendoClients: `pip install https://github.com/Kinnay/NintendoClients/archive/master.zip`  
+SMM2: `pip install https://github.com/MarioPossamato/SMM2/archive/main.zip`
 
 NodeJS version:
 [NodeJS](nodejs.org/)  
