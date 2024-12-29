@@ -18,8 +18,6 @@ import zlib            # Built-in module
 from Crypto.Hash import CMAC
 from Crypto.Cipher import AES
 from Crypto import Random
-from nintendo.sead import random
-from nintendo.enl import crypto
 from SMM2 import encryption
 
 def main():
