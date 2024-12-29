@@ -1,10 +1,13 @@
 # SMM2 Course Decryptor
-A Command-line Tool That Allows You To Decrypt And Encrypt Super Mario Maker 2 Courses And Thumbnails.  
+A Command-line Tool That Allows You To Decrypt And Encrypt Super Mario Maker 2 Courses And Thumbnails. 
+
+## Recent Changes:
+In this fork, I only updated the Python version. Keep that in mind while troubleshooting.
 
 ## Pre-Requisites
 [Python 3.9.0](https://www.python.org/downloads/release/python-390/)  
 PyCryptodome: `pip install pycryptodome`    
-SMM2: `pip install https://github.com/MarioPossamato/SMM2/archive/main.zip`
+SMM2: `pip install https://github.com/pormonto/SMM2_Library/archive/main.zip`
 
 NodeJS version:
 [NodeJS](nodejs.org/)  
